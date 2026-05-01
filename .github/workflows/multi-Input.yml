@@ -1,21 +1,26 @@
 name: Multi-Inputs Demo
-on: 
-workflow_dispatch:
+
+on:
+  workflow_dispatch:
     inputs:
-    environment:
-        description: Choose the environment to deploy
+      environment:
+        description: "Choose the environment to deploy"
         required: true
         default: dev
-        options:  #Choice options for the input
+        type: choice
+        options:
           - dev
           - test
           - prod
+
       artifact-tag:
-      description: Choose the artifact tag to deploy
-      required: true    
+        description: "Choose the artifact tag to deploy"
+        required: true
+        type: string
+
 jobs:
   inputs-demo:
     runs-on: ubuntu-latest
     steps:
       - name: Deploy the Application
-        run: echo "Deploying the ${{ inputs.artifact-tag }} Application to ${{inputs.environment}}"
+        run: echo "Deploying the ${{ inputs['artifact-tag'] }} Application to ${{ inputs.environment }}"
